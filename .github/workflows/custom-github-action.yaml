@@ -1,20 +1,14 @@
 name: github-action
 run-name: ${{ github.actor }} is learning github action
 on: [push]
-jobs: 
-  check-bat-version:
+jobs:
+  build:
     runs-on: ubuntu-latest
+    strategy: 
+      matrix:
+        node: [14,16]
     steps:
-      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      - run: npm install -g bats
-      - run: bats -v
-  run-secret:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Retrieve secret
-        env:
-          super_secret: ${{ secrets.SUPERSECRET }}
-        run: echo "$super_secret"
+          node-version: ${{ matrix.node }}
+      - run: node -v
