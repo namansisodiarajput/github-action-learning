@@ -11,3 +11,10 @@ jobs:
           node-version: '20'
       - run: npm install -g bats
       - run: bats -v
+  run-secret:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retrieve secret
+        env:
+          super_secret: ${{ secrets.SUPERSECRET }}
+        run: echo "$super_secret"
